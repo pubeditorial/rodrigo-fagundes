@@ -800,6 +800,77 @@
       line-height:1.7;
     }
 
+    #author-site .plain-solution-grid{
+      display:grid;
+      gap:var(--s5);
+      align-items:start;
+      grid-template-columns:minmax(220px,280px) minmax(0,1fr);
+    }
+
+    @media (max-width:920px){
+      #author-site .plain-solution-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    #author-site .plain-solution-cover{
+      width:100%;
+      max-width:280px;
+      aspect-ratio:4 / 4.9;
+      border-radius:24px;
+      overflow:hidden;
+      background:#ddd;
+      border:1px solid var(--line);
+    }
+
+    #author-site .plain-solution-cover img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    #author-site .plain-solution-copy{
+      display:grid;
+      gap:16px;
+      align-content:start;
+    }
+
+    #author-site .plain-solution-kicker{
+      color:var(--accent);
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+
+    #author-site .plain-solution-title{
+      margin:0;
+      font-size:clamp(28px,3vw,40px);
+      line-height:1.05;
+      letter-spacing:-.04em;
+      font-weight:980;
+      color:var(--fg);
+    }
+
+    #author-site .plain-solution-text{
+      margin:0;
+      color:var(--muted);
+      font-size:15.5px;
+      line-height:1.8;
+      max-width:64ch;
+    }
+
+    #author-site .plain-solution-bullets{
+      margin:0;
+      padding-left:18px;
+      display:grid;
+      gap:10px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+    }
+
     #author-site .capture-band{
       border-radius:26px;
       padding:clamp(20px,2.6vw,30px);
@@ -1170,6 +1241,53 @@
     .is-hidden{ display:none !important; }
     body.modal-open{ overflow:hidden; }
 
+    #back-to-top{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      width:52px;
+      height:52px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(17,17,17,.88);
+      color:#fff8ef;
+      box-shadow:0 14px 30px rgba(0,0,0,.28);
+      cursor:pointer;
+      z-index:9998;
+      opacity:0;
+      visibility:hidden;
+      pointer-events:none;
+      transform:translateY(8px);
+      transition:opacity .18s ease, transform .18s ease, visibility .18s ease, background .18s ease, border-color .18s ease;
+    }
+
+    #back-to-top svg{
+      width:20px;
+      height:20px;
+      display:block;
+      stroke:currentColor;
+      fill:none;
+      stroke-width:2;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    #back-to-top:hover{
+      background:rgba(17,17,17,.98);
+      border-color:rgba(255,255,255,.22);
+      transform:translateY(6px);
+    }
+
+    #back-to-top.is-visible{
+      opacity:1;
+      visibility:visible;
+      pointer-events:auto;
+      transform:translateY(0);
+    }
+
     @media (max-width:760px){
       #lead-modal{ padding:12px; }
       .lead-dialog{ width:100%; max-height:92vh; border-radius:24px; }
@@ -1177,6 +1295,13 @@
       .lead-body{ padding:16px; }
       .lead-actions{ display:grid; }
       .lead-btn{ width:100%; }
+
+      #back-to-top{
+        right:14px;
+        bottom:14px;
+        width:48px;
+        height:48px;
+      }
     }
   </style>
 </head>
@@ -1186,7 +1311,7 @@
     <a class="skip" href="#main">Pular para o conteúdo</a>
 
     <main id="main">
-      <section class="wrap" id="sobre" aria-label="Sobre Rodrigo Fagundes">
+      <section class="wrap" id="sobre" aria-labelledby="titulo-sobre">
         <div class="hero">
           <div class="hero-inner">
             <header class="header">
@@ -1218,7 +1343,7 @@
                   <span class="tag">Sobre o profissional</span>
                 </div>
 
-                <h1 class="h1">RODRIGO FAGUNDES</h1>
+                <h1 class="h1" id="titulo-sobre">RODRIGO FAGUNDES</h1>
 
                 <p class="hero-lead">
                   Editor de livros e produtor editorial, com formação superior em produção literária e editorial e mais de 10 anos de atuação no mercado do livro. Sua prática reúne execução técnica, organização de processos editoriais, articulação entre etapas da produção e desenvolvimento de soluções aplicadas ao trabalho editorial.
@@ -1291,20 +1416,20 @@
         </div>
       </section>
 
-      <section class="stripe stripe--soft" id="atuacao" aria-label="Atuação editorial">
+      <section class="stripe stripe--soft" id="atuacao" aria-labelledby="titulo-atuacao">
         <div class="wrap">
           <div class="panel">
             <div class="head">
               <span class="tag">Atuação</span>
-              <h2 class="h2">Produção editorial, processos e soluções</h2>
+              <h2 class="h2" id="titulo-atuacao">Produção editorial, processos e soluções</h2>
               <p class="muted">
                 A atuação de Rodrigo Fagundes se organiza entre execução editorial, organização de fluxos de trabalho, assessoria e desenvolvimento de soluções aplicadas ao trabalho com livros.
               </p>
             </div>
 
             <div class="service-grid">
-              <article class="service-card" aria-label="Produção editorial">
-                <h3 class="service-title">Produção editorial</h3>
+              <article class="service-card" aria-labelledby="titulo-producao-editorial">
+                <h3 class="service-title" id="titulo-producao-editorial">Produção editorial</h3>
                 <p class="service-desc">
                   Preparação de originais, copidesque, revisão, diagramação, projeto gráfico, revisão de provas e fechamento técnico para livros impressos e digitais.
                 </p>
@@ -1333,29 +1458,27 @@
 
                 <div class="service-actions">
                   <button
-                    class="btn btn--primary js-download"
+                    class="btn btn--primary js-ticket"
                     type="button"
-                    data-item="APRESENTACAO PRODUCAO EDITORIAL"
-                    data-file-id="ID_APRESENTACAO_PRODUCAO">
+                    data-item="ORCAMENTO PRODUCAO EDITORIAL">
                     <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-                      <path d="M12 3v10"></path>
-                      <path d="M8 9l4 4 4-4"></path>
-                      <path d="M4 17v3h16v-3"></path>
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                     </svg>
-                    Receber apresentação
+                    Solicitar orçamento editorial
                   </button>
 
                   <button
-                    class="btn btn--purchase js-ticket"
+                    class="btn btn--purchase js-download"
                     type="button"
-                    data-item="ORCAMENTO PRODUCAO EDITORIAL">
-                    Solicitar orçamento
+                    data-item="APRESENTACAO PRODUCAO EDITORIAL"
+                    data-file-id="ID_APRESENTACAO_PRODUCAO">
+                    Receber apresentação
                   </button>
                 </div>
               </article>
 
-              <article class="service-card" aria-label="Processos editoriais">
-                <h3 class="service-title">Processos editoriais</h3>
+              <article class="service-card" aria-labelledby="titulo-processos-editoriais">
+                <h3 class="service-title" id="titulo-processos-editoriais">Processos editoriais</h3>
                 <p class="service-desc">
                   Organização de fluxos de trabalho, definição de etapas, padronização, acompanhamento de cronogramas e articulação entre demandas técnicas, editoriais e operacionais.
                 </p>
@@ -1384,29 +1507,27 @@
 
                 <div class="service-actions">
                   <button
-                    class="btn btn--primary js-download"
+                    class="btn btn--primary js-ticket"
                     type="button"
-                    data-item="FLUXO EDITORIAL PADRONIZADO"
-                    data-file-id="ID_FLUXO_EDITORIAL">
+                    data-item="ASSESSORIA EDITORIAL">
                     <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-                      <path d="M12 3v10"></path>
-                      <path d="M8 9l4 4 4-4"></path>
-                      <path d="M4 17v3h16v-3"></path>
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                     </svg>
-                    Ver estrutura de processo
+                    Quero organizar meu fluxo editorial
                   </button>
 
                   <button
-                    class="btn btn--purchase js-ticket"
+                    class="btn btn--purchase js-download"
                     type="button"
-                    data-item="ASSESSORIA EDITORIAL">
-                    Solicitar assessoria
+                    data-item="FLUXO EDITORIAL PADRONIZADO"
+                    data-file-id="ID_FLUXO_EDITORIAL">
+                    Ver estrutura de processo
                   </button>
                 </div>
               </article>
 
-              <article class="service-card" aria-label="PUB Editorial">
-                <h3 class="service-title">PUB Editorial</h3>
+              <article class="service-card" aria-labelledby="titulo-pub-editorial">
+                <h3 class="service-title" id="titulo-pub-editorial">PUB Editorial</h3>
                 <p class="service-desc">
                   Marca profissional por meio da qual Rodrigo Fagundes organiza sua atuação no mercado editorial, reunindo serviços, assessoria, gestão de projetos, formação e soluções técnicas.
                 </p>
@@ -1435,29 +1556,27 @@
 
                 <div class="service-actions">
                   <button
-                    class="btn btn--primary js-download"
+                    class="btn btn--primary js-ticket"
                     type="button"
-                    data-item="CATALOGO PUB EDITORIAL"
-                    data-file-id="ID_CATALOGO_PUB_EDITORIAL">
+                    data-item="CONTATO PUB EDITORIAL">
                     <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-                      <path d="M12 3v10"></path>
-                      <path d="M8 9l4 4 4-4"></path>
-                      <path d="M4 17v3h16v-3"></path>
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                     </svg>
-                    Receber catálogo
+                    Falar sobre um projeto
                   </button>
 
                   <button
-                    class="btn btn--purchase js-ticket"
+                    class="btn btn--purchase js-download"
                     type="button"
-                    data-item="CONTATO PUB EDITORIAL">
-                    Falar sobre um projeto
+                    data-item="CATALOGO PUB EDITORIAL"
+                    data-file-id="ID_CATALOGO_PUB_EDITORIAL">
+                    Receber catálogo
                   </button>
                 </div>
               </article>
 
-              <article class="service-card" aria-label="Formação e qualificação">
-                <h3 class="service-title">Formação e qualificação</h3>
+              <article class="service-card" aria-labelledby="titulo-formacao-qualificacao">
+                <h3 class="service-title" id="titulo-formacao-qualificacao">Formação e qualificação</h3>
                 <p class="service-desc">
                   Capacitação em ferramentas, rotinas editoriais e produção de livros, com foco em treinamento, apoio à autopublicação e qualificação de equipes.
                 </p>
@@ -1486,23 +1605,21 @@
 
                 <div class="service-actions">
                   <button
-                    class="btn btn--primary js-download"
+                    class="btn btn--primary js-ticket"
                     type="button"
-                    data-item="APRESENTACAO FORMACAO EDITORIAL"
-                    data-file-id="ID_APRESENTACAO_FORMACAO">
+                    data-item="TREINAMENTO PRODUCAO EDITORIAL">
                     <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-                      <path d="M12 3v10"></path>
-                      <path d="M8 9l4 4 4-4"></path>
-                      <path d="M4 17v3h16v-3"></path>
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                     </svg>
-                    Receber material
+                    Quero treinamento editorial
                   </button>
 
                   <button
-                    class="btn btn--purchase js-ticket"
+                    class="btn btn--purchase js-download"
                     type="button"
-                    data-item="TREINAMENTO PRODUCAO EDITORIAL">
-                    Solicitar treinamento
+                    data-item="APRESENTACAO FORMACAO EDITORIAL"
+                    data-file-id="ID_APRESENTACAO_FORMACAO">
+                    Receber material
                   </button>
                 </div>
               </article>
@@ -1511,7 +1628,7 @@
         </div>
       </section>
 
-      <section class="stripe stripe--plain" id="pages" aria-label="PUB Editorial Pages">
+      <section class="stripe stripe--plain" id="pages" aria-labelledby="titulo-pages">
         <div class="wrap">
           <div class="feature-panel">
             <div class="feature-grid">
@@ -1521,7 +1638,7 @@
 
               <div class="feature-copy">
                 <span class="feature-kicker">Solução em destaque</span>
-                <h2 class="feature-title">PUB Editorial Pages</h2>
+                <h2 class="feature-title" id="titulo-pages">PUB Editorial Pages</h2>
 
                 <p class="feature-text">
                   Estrutura voltada à organização da presença editorial e do relacionamento com leitores, autores, clientes ou públicos de interesse. Integra apresentação da obra ou serviço, captação de interesse, organização de contatos, atendimento e comunicação contínua.
@@ -1540,23 +1657,21 @@
 
                 <div class="service-actions">
                   <button
-                    class="btn btn--primary js-download"
+                    class="btn btn--primary js-ticket"
                     type="button"
-                    data-item="APRESENTACAO PUB EDITORIAL PAGES"
-                    data-file-id="ID_APRESENTACAO_PAGES">
+                    data-item="CONTATO PUB EDITORIAL PAGES">
                     <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-                      <path d="M12 3v10"></path>
-                      <path d="M8 9l4 4 4-4"></path>
-                      <path d="M4 17v3h16v-3"></path>
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                     </svg>
-                    Receber apresentação
+                    Quero uma página editorial
                   </button>
 
                   <button
-                    class="btn btn--purchase js-ticket"
+                    class="btn btn--purchase js-download"
                     type="button"
-                    data-item="CONTATO PUB EDITORIAL PAGES">
-                    Solicitar implementação
+                    data-item="APRESENTACAO PUB EDITORIAL PAGES"
+                    data-file-id="ID_APRESENTACAO_PAGES">
+                    Receber apresentação
                   </button>
                 </div>
               </div>
@@ -1565,27 +1680,27 @@
         </div>
       </section>
 
-      <section class="stripe stripe--plain" id="scripts" aria-label="PUB Editorial Scripts">
+      <section class="stripe stripe--plain" id="scripts" aria-labelledby="titulo-scripts">
         <div class="wrap">
-          <div class="feature-panel">
-            <div class="feature-grid">
-              <div class="feature-cover">
+          <div class="panel">
+            <div class="plain-solution-grid">
+              <div class="plain-solution-cover">
                 <img src="assets/pub-editorial-scripts.jpg" alt="Apresentação visual do PUB Editorial Scripts" loading="lazy" />
               </div>
 
-              <div class="feature-copy">
-                <span class="feature-kicker">Solução técnica</span>
-                <h2 class="feature-title">PUB Editorial Scripts</h2>
+              <div class="plain-solution-copy">
+                <span class="plain-solution-kicker">Solução técnica complementar</span>
+                <h2 class="plain-solution-title" id="titulo-scripts">PUB Editorial Scripts</h2>
 
-                <p class="feature-text">
+                <p class="plain-solution-text">
                   Pacote de scripts JSX para Adobe InDesign voltado à padronização e à aceleração do fluxo editorial de livros, com foco na automação de etapas críticas da diagramação e do fechamento técnico.
                 </p>
 
-                <p class="feature-text">
+                <p class="plain-solution-text">
                   A solução atua sobre necessidades reais da produção de livros, qualificando a execução sem substituir o trabalho editorial.
                 </p>
 
-                <ul class="feature-bullets">
+                <ul class="plain-solution-bullets">
                   <li>Setup técnico rápido de documentos</li>
                   <li>Reaplicação de ajustes em lote</li>
                   <li>Padronização tipográfica e maior previsibilidade</li>
@@ -1594,23 +1709,21 @@
 
                 <div class="service-actions">
                   <button
-                    class="btn btn--primary js-download"
+                    class="btn btn--primary js-ticket"
                     type="button"
-                    data-item="APRESENTACAO PUB EDITORIAL SCRIPTS"
-                    data-file-id="ID_APRESENTACAO_SCRIPTS">
+                    data-item="CONTATO PUB EDITORIAL SCRIPTS">
                     <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-                      <path d="M12 3v10"></path>
-                      <path d="M8 9l4 4 4-4"></path>
-                      <path d="M4 17v3h16v-3"></path>
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                     </svg>
-                    Receber material
+                    Quero conhecer os scripts
                   </button>
 
                   <button
-                    class="btn btn--purchase js-ticket"
+                    class="btn btn--purchase js-download"
                     type="button"
-                    data-item="CONTATO PUB EDITORIAL SCRIPTS">
-                    Solicitar acesso
+                    data-item="APRESENTACAO PUB EDITORIAL SCRIPTS"
+                    data-file-id="ID_APRESENTACAO_SCRIPTS">
+                    Receber material
                   </button>
                 </div>
               </div>
@@ -1619,11 +1732,11 @@
         </div>
       </section>
 
-      <section class="stripe stripe--soft" aria-label="Acompanhar novidades">
+      <section class="stripe stripe--soft" aria-labelledby="titulo-novidades">
         <div class="wrap">
           <div class="capture-band">
             <div>
-              <h3>Receba materiais, apresentações e novidades da PUB Editorial</h3>
+              <h2 id="titulo-novidades">Receba materiais, apresentações e novidades da PUB Editorial</h2>
               <p>Acesse conteúdos sobre produção editorial, processos, soluções, materiais técnicos e atualizações por e-mail.</p>
             </div>
 
@@ -1645,18 +1758,18 @@
         </div>
       </section>
 
-      <section class="stripe stripe--plain" id="materiais" aria-label="Materiais">
+      <section class="stripe stripe--plain" id="materiais" aria-labelledby="titulo-materiais">
         <div class="wrap">
           <div class="panel">
             <div class="head">
               <span class="tag">Materiais</span>
-              <h2 class="h2">Materiais para conhecer a atuação</h2>
+              <h2 class="h2" id="titulo-materiais">Materiais para conhecer a atuação</h2>
               <p class="muted">Portfólio, apresentações e canal de contato para serviços editoriais, Pages, Scripts e projetos relacionados à produção de livros.</p>
             </div>
 
             <div class="materials-grid">
-              <article class="card">
-                <h3>Portfólio</h3>
+              <article class="card" aria-labelledby="titulo-material-portfolio">
+                <h3 id="titulo-material-portfolio">Portfólio</h3>
                 <p>Receba uma apresentação da trajetória, da experiência editorial, do escopo de atuação e dos tipos de projeto desenvolvidos por Rodrigo Fagundes.</p>
                 <div style="margin-top:16px;">
                   <button
@@ -1669,8 +1782,8 @@
                 </div>
               </article>
 
-              <article class="card">
-                <h3>Soluções</h3>
+              <article class="card" aria-labelledby="titulo-material-solucoes">
+                <h3 id="titulo-material-solucoes">Soluções</h3>
                 <p>Receba material sobre a estrutura da PUB Editorial, o PUB Editorial Pages e o PUB Editorial Scripts.</p>
                 <div style="margin-top:16px;">
                   <button
@@ -1683,8 +1796,8 @@
                 </div>
               </article>
 
-              <article class="card">
-                <h3>Contato</h3>
+              <article class="card" aria-labelledby="titulo-material-contato">
+                <h3 id="titulo-material-contato">Contato</h3>
                 <p>Envie uma mensagem sobre produção editorial, assessoria, Pages, Scripts, treinamento ou outros assuntos relacionados ao trabalho editorial.</p>
                 <div style="margin-top:16px;">
                   <button
@@ -1700,12 +1813,12 @@
         </div>
       </section>
 
-      <section class="stripe stripe--soft" id="faq" aria-label="Perguntas frequentes">
+      <section class="stripe stripe--soft" id="faq" aria-labelledby="titulo-faq">
         <div class="wrap">
           <div class="panel">
             <div class="head">
               <span class="tag">Perguntas frequentes</span>
-              <h2 class="h2">Perguntas frequentes</h2>
+              <h2 class="h2" id="titulo-faq">Perguntas frequentes</h2>
               <p class="muted">Tire dúvidas sobre serviços editoriais, soluções, materiais e formas de contato.</p>
             </div>
 
@@ -1858,9 +1971,10 @@
         </div>
       </section>
 
-      <section class="stripe stripe--plain" style="padding-top:24px" aria-label="Rodapé">
+      <section class="stripe stripe--plain" style="padding-top:24px" aria-labelledby="titulo-rodape">
         <div class="wrap">
-          <footer class="footer" aria-label="Rodapé">
+          <footer class="footer" aria-labelledby="titulo-rodape">
+            <h2 id="titulo-rodape" class="is-hidden">Rodapé</h2>
             <div class="footgrid">
               <div class="footbrand">
                 <span class="foottitle">Rodrigo Fagundes</span>
@@ -1954,10 +2068,21 @@
           <button type="submit" id="lead-submit" class="lead-btn lead-btn--primary">Continuar</button>
         </div>
 
-        <div id="lead-hint" class="lead-hint">Preencha seu nome e e-mail para continuar.</div>
+        <div id="lead-hint" class="lead-hint" aria-live="polite">Preencha seu nome e e-mail para continuar.</div>
       </form>
     </div>
   </div>
+
+  <button
+    type="button"
+    id="back-to-top"
+    aria-label="Voltar ao início"
+    title="Voltar ao início">
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+      <path d="M12 19V5"></path>
+      <path d="M6 11l6-6 6 6"></path>
+    </svg>
+  </button>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -1979,6 +2104,7 @@
       const whatsappWrap = document.getElementById("lead-whatsapp-wrap");
       const messageWrap = document.getElementById("lead-message-wrap");
       const modalTitle = document.getElementById("lead-title");
+      const backToTopButton = document.getElementById("back-to-top");
 
       const downloadButtons = Array.prototype.slice.call(document.querySelectorAll(".js-download"));
       const ticketButtons = Array.prototype.slice.call(document.querySelectorAll(".js-ticket"));
@@ -2247,6 +2373,26 @@
         return data;
       }
 
+      function setSuccessAndClose(message, delay) {
+        hint.textContent = message;
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = "1";
+
+        window.setTimeout(function () {
+          closeModal();
+        }, delay || 1200);
+      }
+
+      function toggleBackToTop() {
+        if (!backToTopButton) return;
+
+        if (window.scrollY > 400) {
+          backToTopButton.classList.add("is-visible");
+        } else {
+          backToTopButton.classList.remove("is-visible");
+        }
+      }
+
       inputWhatsapp.addEventListener("blur", function () {
         inputWhatsapp.value = formatPhoneBR(inputWhatsapp.value);
       });
@@ -2319,6 +2465,20 @@
           closeModal();
         }
       });
+
+      if (backToTopButton) {
+        backToTopButton.addEventListener("click", function () {
+          const target = document.getElementById("sobre");
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          } else {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }
+        });
+
+        toggleBackToTop();
+        window.addEventListener("scroll", toggleBackToTop, { passive: true });
+      }
 
       window.addEventListener("keydown", function (event) {
         if (event.key === "Escape" && modal.getAttribute("data-state") === "open") {
@@ -2405,15 +2565,9 @@
               lead_type: "ticket"
             });
 
-            submitBtn.disabled = false;
-            submitBtn.style.opacity = "1";
-            submitBtn.textContent = "Enviar mensagem";
             hint.textContent = "Mensagem recebida com sucesso.";
-
-            window.setTimeout(function () {
-              closeModal();
-              alert("Mensagem recebida com sucesso.");
-            }, 250);
+            submitBtn.textContent = "Mensagem enviada";
+            setSuccessAndClose("Mensagem recebida com sucesso.", 1200);
           } catch (error) {
             submitBtn.disabled = false;
             submitBtn.style.opacity = "1";
@@ -2476,9 +2630,11 @@
             link_url: redirectUrl
           });
 
-          const downloadWindow = window.open(redirectUrl, "_blank", "noopener");
+          hint.textContent = "Material liberado com sucesso.";
+          submitBtn.textContent = "Material liberado";
 
-          closeModal();
+          const downloadWindow = window.open(redirectUrl, "_blank", "noopener");
+          setSuccessAndClose("Material liberado com sucesso.", 600);
 
           if (!downloadWindow) {
             window.location.href = redirectUrl;
