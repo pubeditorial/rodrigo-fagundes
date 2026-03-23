@@ -13,6 +13,9 @@
 
   <link rel="canonical" href="https://SEU-DOMINIO.com.br/" />
   <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Source+Serif+4:opsz,wght@8..60,700;8..60,800;8..60,900&display=swap" rel="stylesheet" />
 
   <title>Rodrigo Fagundes: PUB Editorial</title>
 
@@ -142,9 +145,9 @@
       --line:rgba(24,21,18,.10);
       --line-strong:rgba(24,21,18,.18);
       --line-dark:rgba(255,255,255,.10);
-      --accent:#b08b57;
-      --accent-soft:#c59b62;
-      --focus:rgba(176,139,87,.26);
+      --accent:#a67a3f;
+      --accent-soft:#bb8d52;
+      --focus:rgba(166,122,63,.24);
       --container:1180px;
       --gutter:clamp(18px,3vw,34px);
       --s1:8px;
@@ -165,6 +168,8 @@
       --text-md:16px;
       --text-sm:14.5px;
       --text-xs:12px;
+      --font-sans:"Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      --font-serif:"Source Serif 4", Georgia, "Times New Roman", serif;
     }
 
     html, body{
@@ -175,10 +180,10 @@
 
     body{
       background:
-        radial-gradient(circle at top, rgba(176,139,87,.11), rgba(176,139,87,0) 36%),
+        radial-gradient(circle at top, rgba(166,122,63,.10), rgba(166,122,63,0) 36%),
         linear-gradient(180deg, #0d0e10 0%, #121418 100%);
       color:var(--fg-dark);
-      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-family:var(--font-sans);
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
       overflow-x:hidden;
@@ -279,10 +284,11 @@
 
     #author-site .h1{
       margin:0;
+      font-family:var(--font-serif);
       font-size:clamp(42px,5vw,76px);
       line-height:.95;
-      letter-spacing:-.06em;
-      font-weight:980;
+      letter-spacing:-.045em;
+      font-weight:900;
       max-width:12ch;
       color:#fff8ef;
     }
@@ -291,8 +297,8 @@
       margin:0;
       font-size:var(--text-xl);
       line-height:1.08;
-      letter-spacing:-.03em;
-      font-weight:950;
+      letter-spacing:-.028em;
+      font-weight:900;
       color:var(--fg);
     }
 
@@ -361,10 +367,11 @@
 
     #author-site .logo{
       font-size:25px;
-      font-weight:980;
-      letter-spacing:-.03em;
-      line-height:1.05;
+      font-weight:950;
+      letter-spacing:-.025em;
+      line-height:1.08;
       color:#fff8ef;
+      max-width:28ch;
     }
 
     #author-site .sub{
@@ -571,7 +578,7 @@
     #author-site .btn--primary{
       background:var(--accent);
       color:#111111;
-      box-shadow:0 14px 30px rgba(176,139,87,.24);
+      box-shadow:0 14px 30px rgba(166,122,63,.24);
     }
 
     #author-site .btn--primary:hover{
@@ -641,8 +648,8 @@
       margin:0;
       font-size:clamp(21px,2vw,28px);
       line-height:1.12;
-      letter-spacing:-.03em;
-      font-weight:950;
+      letter-spacing:-.028em;
+      font-weight:900;
       max-width:22ch;
     }
 
@@ -774,10 +781,11 @@
 
     #author-site .feature-title{
       margin:0;
+      font-family:var(--font-serif);
       font-size:clamp(30px,3.2vw,46px);
       line-height:1.03;
-      letter-spacing:-.045em;
-      font-weight:980;
+      letter-spacing:-.03em;
+      font-weight:800;
       max-width:18ch;
       color:#fff8ef;
     }
@@ -846,10 +854,11 @@
 
     #author-site .plain-solution-title{
       margin:0;
+      font-family:var(--font-serif);
       font-size:clamp(28px,3vw,40px);
       line-height:1.05;
-      letter-spacing:-.04em;
-      font-weight:980;
+      letter-spacing:-.028em;
+      font-weight:800;
       color:var(--fg);
     }
 
@@ -886,12 +895,14 @@
       }
     }
 
-    #author-site .capture-band h3{
+    #author-site .capture-band h3,
+    #author-site .capture-band h2{
       margin:0;
       font-size:24px;
       line-height:1.08;
       letter-spacing:-.03em;
       color:var(--fg);
+      font-weight:900;
     }
 
     #author-site .capture-band p{
@@ -941,6 +952,7 @@
       font-size:18px;
       line-height:1.15;
       letter-spacing:-.02em;
+      font-weight:900;
     }
 
     #author-site .card p{
@@ -1136,8 +1148,8 @@
     .lead-title{
       font-size:clamp(22px,2.2vw,28px);
       line-height:1.1;
-      font-weight:980;
-      letter-spacing:-.03em;
+      font-weight:900;
+      letter-spacing:-.025em;
       color:var(--fg);
       max-width:22ch;
     }
@@ -1182,8 +1194,8 @@
 
     .lead-input:focus{
       outline:none;
-      border-color:rgba(176,139,87,.54);
-      box-shadow:0 0 0 4px rgba(176,139,87,.10);
+      border-color:rgba(166,122,63,.54);
+      box-shadow:0 0 0 4px rgba(166,122,63,.10);
     }
 
     textarea.lead-input{
