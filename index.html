@@ -1137,7 +1137,7 @@
       position:fixed;
       inset:0;
       z-index:9999;
-      padding:clamp(16px,3vw,32px);
+      padding:clamp(12px,2.4vw,28px);
       background:rgba(8,8,9,.66);
       backdrop-filter:blur(10px);
       -webkit-backdrop-filter:blur(10px);
@@ -1150,14 +1150,48 @@
     }
 
     .lead-dialog{
-      width:min(560px,100%);
-      max-height:min(88vh,940px);
+      width:min(560px, calc(100vw - clamp(24px, 5vw, 56px)));
+      max-height:min(720px, calc(100dvh - clamp(24px, 5vw, 56px)));
       overflow:auto;
+      overscroll-behavior:contain;
       border-radius:28px;
       background:var(--panel);
       border:1px solid var(--line);
       box-shadow:0 28px 90px rgba(0,0,0,.30);
       color:var(--fg);
+      scrollbar-gutter:stable;
+      scrollbar-width:thin;
+      scrollbar-color:rgba(24,21,18,.18) transparent;
+    }
+
+    .lead-dialog::-webkit-scrollbar{
+      width:10px;
+    }
+
+    .lead-dialog::-webkit-scrollbar-track{
+      background:transparent;
+      border-radius:999px;
+    }
+
+    .lead-dialog::-webkit-scrollbar-thumb{
+      background:linear-gradient(
+        180deg,
+        rgba(24,21,18,.14),
+        rgba(24,21,18,.26)
+      );
+      border:2px solid transparent;
+      background-clip:padding-box;
+      border-radius:999px;
+    }
+
+    .lead-dialog::-webkit-scrollbar-thumb:hover{
+      background:linear-gradient(
+        180deg,
+        rgba(24,21,18,.22),
+        rgba(24,21,18,.34)
+      );
+      border:2px solid transparent;
+      background-clip:padding-box;
     }
 
     .lead-header{
@@ -1360,8 +1394,14 @@
         margin-top:38px;
       }
 
-      #lead-modal{ padding:12px; }
-      .lead-dialog{ width:100%; max-height:92vh; border-radius:24px; }
+      #lead-modal{ padding:10px; }
+
+      .lead-dialog{
+        width:min(100%, 520px);
+        max-height:min(680px, calc(100dvh - 20px));
+        border-radius:24px;
+      }
+
       .lead-header{ padding:18px 16px 14px; }
       .lead-body{ padding:16px; }
       .lead-actions{ display:grid; }
