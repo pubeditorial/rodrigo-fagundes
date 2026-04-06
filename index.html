@@ -124,50 +124,60 @@
 
   <style>
     :root {
-      --bg: #fbf8f2;
-      --bg-alt: #f2ede4;
-      --surface: #fffdf9;
-      --surface-2: #ffffff;
+      --bg: #f6f1ea;
+      --bg-soft: #fbf8f3;
+      --surface: rgba(255,255,255,.72);
+      --surface-strong: #fffdfa;
+      --surface-dark: #141316;
+      --surface-dark-2: #1d1b20;
       --text: #1e1a17;
-      --text-soft: #5f564d;
-      --line: rgba(30, 26, 23, 0.12);
-      --line-strong: rgba(30, 26, 23, 0.2);
-      --accent: #87603a;
-      --accent-hover: #6f4d2e;
-      --deep: #14110f;
-      --deep-2: #191512;
-      --max: 1120px;
-      --text-max: 760px;
-      --space-1: 10px;
-      --space-2: 16px;
-      --space-3: 24px;
-      --space-4: 40px;
-      --space-5: 64px;
-      --space-6: 96px;
-      --radius: 18px;
-      --radius-lg: 26px;
-      --shadow: 0 18px 40px rgba(20, 17, 15, 0.06);
-      --shadow-strong: 0 24px 60px rgba(20, 17, 15, 0.12);
+      --text-soft: #675f57;
+      --text-inverse: #f8f3eb;
+      --line: rgba(30,26,23,.10);
+      --line-strong: rgba(30,26,23,.18);
+      --accent: #8b5e34;
+      --accent-2: #b07b47;
+      --accent-hover: #704927;
+      --shadow: 0 20px 50px rgba(20,17,15,.07);
+      --shadow-strong: 0 28px 90px rgba(20,17,15,.14);
+      --radius: 20px;
+      --radius-lg: 30px;
+      --max: 1160px;
       --font: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      --focus: rgba(135, 96, 58, 0.22);
+      --focus: rgba(139,94,52,.22);
     }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      background: var(--bg);
-      color: var(--text);
       font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(176,123,71,.08), transparent 28%),
+        radial-gradient(circle at top right, rgba(20,17,15,.05), transparent 26%),
+        linear-gradient(180deg, #f9f5ef 0%, #f4eee6 100%);
       line-height: 1.65;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
       overflow-x: hidden;
     }
 
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: radial-gradient(circle at center, black 42%, transparent 82%);
+      opacity: .18;
+      z-index: -1;
+    }
+
     a { color: inherit; }
     img { display: block; max-width: 100%; }
-    button, .button {
+    button, .button, .btn {
       font: inherit;
       border: 0;
       cursor: pointer;
@@ -177,7 +187,7 @@
     :focus-visible {
       outline: 3px solid var(--focus);
       outline-offset: 3px;
-      border-radius: 12px;
+      border-radius: 14px;
     }
 
     .skip {
@@ -202,18 +212,18 @@
       height: auto;
     }
 
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      backdrop-filter: blur(12px);
-      background: rgba(251, 248, 242, 0.92);
-      border-bottom: 1px solid rgba(30, 26, 23, 0.08);
-    }
-
     .wrap {
       width: min(calc(100% - 40px), var(--max));
       margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(18px);
+      background: rgba(246,241,234,.74);
+      border-bottom: 1px solid rgba(30,26,23,.08);
     }
 
     .header-inner {
@@ -221,188 +231,156 @@
       align-items: center;
       justify-content: space-between;
       gap: 24px;
-      padding: 16px 0;
+      min-height: 78px;
     }
 
     .brand {
       display: flex;
       flex-direction: column;
       gap: 4px;
+      text-decoration: none;
     }
 
     .brand strong {
       font-size: 1rem;
-      letter-spacing: -0.02em;
+      font-weight: 800;
+      letter-spacing: -.02em;
     }
 
     .brand span {
+      font-size: .82rem;
       color: var(--text-soft);
-      font-size: 0.82rem;
     }
 
     .nav {
       display: flex;
-      flex-wrap: wrap;
-      gap: 18px;
       align-items: center;
+      gap: 10px 12px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
     .nav a,
     .nav button {
       color: var(--text-soft);
       text-decoration: none;
-      font-size: 0.94rem;
+      font-size: .94rem;
+      font-weight: 500;
       background: none;
-      padding: 0;
+      padding: 10px 12px;
+      border-radius: 999px;
       border: 0;
+      transition: background .18s ease, color .18s ease;
     }
 
     .nav a:hover,
-    .nav button:hover { color: var(--text); }
-
-    .cta-link {
-      color: var(--deep);
-      font-weight: 600;
+    .nav button:hover {
+      color: var(--text);
+      background: rgba(255,255,255,.65);
     }
+
+    .nav .cta-link {
+      color: #fff;
+      background: var(--surface-dark);
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+
+    .nav .cta-link:hover { background: #000; color: #fff; }
 
     main section {
-      padding: var(--space-6) 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .hero {
-      padding-top: 88px;
-      padding-bottom: 80px;
-    }
-
-    .hero-grid {
-      display: grid;
-      gap: 28px;
-      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
-      align-items: start;
-    }
-
-    .hero-card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.92));
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      padding: 20px;
-      box-shadow: var(--shadow-strong);
-    }
-
-    .portrait-wrap {
-      display: grid;
-      gap: 16px;
-      grid-template-columns: minmax(150px, 190px) minmax(0, 1fr);
-      align-items: start;
-    }
-
-    .portrait {
-      width: 100%;
-      aspect-ratio: 4 / 4.95;
-      border-radius: 22px;
-      overflow: hidden;
-      background: #ddd;
-    }
-
-    .portrait img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .portrait-meta {
-      display: grid;
-      gap: 10px;
-      align-content: start;
-    }
-
-    .portrait-meta strong {
-      font-size: 1.05rem;
-      line-height: 1.2;
-    }
-
-    .portrait-meta span {
-      color: var(--text-soft);
-      font-size: 0.94rem;
-      line-height: 1.65;
-      display: block;
-    }
-
-    .hero-stat-grid {
-      display: grid;
-      gap: 10px;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      margin-top: 16px;
-    }
-
-    .hero-stat {
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: #f5efe7;
-      padding: 14px;
-    }
-
-    .hero-stat strong {
-      display: block;
-      font-size: 0.72rem;
-      line-height: 1.2;
-      margin-bottom: 6px;
-      color: var(--accent);
-      letter-spacing: .06em;
-      text-transform: uppercase;
-    }
-
-    .hero-stat span {
-      display: block;
-      color: var(--text-soft);
-      font-size: 0.86rem;
-      line-height: 1.55;
+      padding: 100px 0;
+      position: relative;
     }
 
     .eyebrow {
-      margin: 0 0 14px;
-      color: var(--accent);
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
+      margin: 0 0 16px;
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .14em;
       text-transform: uppercase;
+      color: var(--accent);
     }
 
     h1, h2, h3 {
       margin: 0;
-      letter-spacing: -0.04em;
+      letter-spacing: -.045em;
       line-height: 1.05;
-      font-kerning: normal;
-      font-feature-settings: "liga" 1, "kern" 1;
     }
 
     h1 {
-      max-width: 10ch;
-      font-size: clamp(2.9rem, 7vw, 5.4rem);
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 900;
+      max-width: 8ch;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      font-weight: 850;
+    }
+
+    h3 {
+      font-size: 1.05rem;
       font-weight: 800;
     }
 
+    .hero {
+      padding-top: 78px;
+      padding-bottom: 88px;
+    }
+
+    .hero-shell {
+      position: relative;
+      overflow: hidden;
+      border-radius: 36px;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(176,123,71,.20), transparent 30%),
+        linear-gradient(135deg, rgba(255,255,255,.88), rgba(255,252,248,.64));
+      border: 1px solid rgba(30,26,23,.08);
+      box-shadow: var(--shadow-strong);
+      padding: clamp(28px, 4vw, 46px);
+    }
+
+    .hero-shell::after {
+      content: "";
+      position: absolute;
+      inset: auto -90px -90px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(139,94,52,.12), transparent 66%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(320px, .8fr);
+      gap: 34px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
     .lead {
-      max-width: var(--text-max);
-      margin-top: 18px;
-      font-size: clamp(1.15rem, 2vw, 1.45rem);
-      line-height: 1.4;
+      margin: 18px 0 0;
+      max-width: 20ch;
+      font-size: clamp(1.18rem, 2vw, 1.55rem);
+      line-height: 1.38;
       color: var(--text);
     }
 
     .intro {
-      max-width: 760px;
-      margin-top: 18px;
+      margin: 18px 0 0;
+      max-width: 62ch;
       color: var(--text-soft);
-      font-size: 1.05rem;
+      font-size: 1.03rem;
     }
 
     .hero-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 30px;
+      gap: 10px;
+      margin-top: 28px;
     }
 
     .pill {
@@ -410,19 +388,21 @@
       align-items: center;
       min-height: 40px;
       padding: 0 14px;
-      border: 1px solid var(--line-strong);
       border-radius: 999px;
+      border: 1px solid rgba(30,26,23,.12);
+      background: rgba(255,255,255,.62);
       color: var(--text);
-      background: rgba(255,255,255,0.5);
-      font-size: 0.92rem;
+      font-size: .92rem;
+      font-weight: 500;
     }
 
     .hero-actions,
-    .service-actions {
+    .service-actions,
+    .cluster-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 14px;
-      margin-top: 34px;
+      margin-top: 32px;
     }
 
     .button,
@@ -430,11 +410,11 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 52px;
-      padding: 0 18px;
-      border-radius: 14px;
-      transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s ease, opacity 0.18s ease;
+      min-height: 54px;
+      padding: 0 20px;
+      border-radius: 16px;
       white-space: nowrap;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease, color .18s ease, opacity .18s ease;
     }
 
     .button:hover,
@@ -444,8 +424,9 @@
 
     .button-primary,
     .btn--primary {
-      background: var(--deep);
+      background: var(--surface-dark);
       color: #fff;
+      box-shadow: 0 14px 34px rgba(20,17,15,.18);
     }
 
     .button-primary:hover,
@@ -454,16 +435,16 @@
     .button-secondary,
     .btn--secondary,
     .btn--purchase {
-      border: 1px solid var(--line-strong);
+      background: rgba(255,255,255,.74);
+      border: 1px solid rgba(30,26,23,.14);
       color: var(--text);
-      background: transparent;
     }
 
     .button-secondary:hover,
     .btn--secondary:hover,
     .btn--purchase:hover {
-      border-color: var(--text);
-      background: rgba(255,255,255,0.6);
+      background: #fff;
+      border-color: rgba(30,26,23,.24);
     }
 
     .btn svg,
@@ -480,261 +461,302 @@
       margin-right: 8px;
     }
 
-    .section-grid {
+    .hero-panel {
       display: grid;
-      grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
-      gap: 44px;
+      gap: 18px;
+      padding: 22px;
+      border-radius: 28px;
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(30,26,23,.08);
+      box-shadow: var(--shadow);
+    }
+
+    .portrait-grid {
+      display: grid;
+      grid-template-columns: 168px minmax(0,1fr);
+      gap: 18px;
+      align-items: center;
+    }
+
+    .portrait {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      border-radius: 22px;
+      overflow: hidden;
+      background: #d9d1c8;
+    }
+
+    .portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .portrait-copy strong {
+      display: block;
+      font-size: 1.06rem;
+      line-height: 1.2;
+      letter-spacing: -.02em;
+      margin-bottom: 8px;
+    }
+
+    .portrait-copy span {
+      display: block;
+      color: var(--text-soft);
+      font-size: .95rem;
+      line-height: 1.68;
+    }
+
+    .stats-grid,
+    .benefit-grid,
+    .service-grid,
+    .materials-grid,
+    .audience-grid,
+    .proof-grid,
+    .faq-grid-bottom {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .proof-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .stat,
+    .card,
+    .service-card,
+    .material-card,
+    .proof-card,
+    .audience-card,
+    .process-step,
+    .faq-item,
+    .footer-box,
+    .feature-panel,
+    .plain-panel,
+    .capture-band {
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: var(--surface-strong);
+      box-shadow: var(--shadow);
+    }
+
+    .stat,
+    .card,
+    .service-card,
+    .material-card,
+    .proof-card,
+    .audience-card,
+    .process-step {
+      padding: 22px;
+    }
+
+    .stat strong,
+    .proof-card strong {
+      display: block;
+      font-size: .75rem;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .stat span,
+    .card p,
+    .service-card p,
+    .material-card p,
+    .proof-card p,
+    .audience-card p,
+    .process-step p,
+    .section-intro,
+    .feature-text,
+    .plain-text,
+    .faq-answer,
+    .closing-copy,
+    .fineprint,
+    .section-note {
+      color: var(--text-soft);
+    }
+
+    .section-heading {
+      display: grid;
+      gap: 18px;
+      margin-bottom: 28px;
+      max-width: 760px;
+    }
+
+    .section-intro {
+      font-size: 1.03rem;
+      max-width: 62ch;
+      margin: 0;
+    }
+
+    .section-note {
+      margin: 0;
+      font-size: .95rem;
+    }
+
+    .cluster {
+      display: grid;
+      gap: 28px;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+      gap: 30px;
       align-items: start;
     }
 
-    .section-label {
-      position: sticky;
-      top: 92px;
+    .surface-soft {
+      padding: clamp(24px, 4vw, 34px);
+      border-radius: 30px;
+      background: linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,255,255,.42));
+      border: 1px solid rgba(30,26,23,.08);
+      box-shadow: var(--shadow);
     }
 
-    .section-label h2 {
-      font-size: clamp(1.5rem, 2vw, 1.9rem);
-      font-weight: 700;
-    }
-
-    .section-label p {
-      margin: 12px 0 0;
-      color: var(--text-soft);
-      font-size: 0.96rem;
-      max-width: 22ch;
-    }
-
-    .section-body {
-      max-width: var(--text-max);
-    }
-
-    .section-body > p:first-child { margin-top: 0; }
-    .section-body p { margin: 0 0 16px; font-size: 1.03rem; }
-
-    .subhead {
-      margin-top: 28px;
-      margin-bottom: 10px;
-      font-size: 1.08rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-
+    .service-card ul,
+    .material-card ul,
+    .audience-card ul,
+    .card ul,
+    .feature-bullets,
+    .plain-bullets,
     ul.clean,
     .stack-list {
-      margin: 0;
-      padding-left: 20px;
+      margin: 14px 0 0;
+      padding-left: 18px;
       color: var(--text-soft);
     }
 
     ul.clean li,
-    .stack-list li { margin: 6px 0; }
-
-    .phase-grid {
-      display: grid;
-      gap: 24px;
-      margin-top: 28px;
+    .stack-list li,
+    .service-card li,
+    .material-card li,
+    .audience-card li,
+    .card li,
+    .feature-bullets li,
+    .plain-bullets li {
+      margin: 7px 0;
     }
 
-    .phase,
-    .note-card,
-    .service-card,
-    .feature-panel,
-    .capture-band,
-    .card,
-    .faq-item,
-    .footer-box {
-      padding: 22px 24px;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .phase h3,
-    .note-card h3,
-    .card h3,
-    .service-card h3 {
-      font-size: 1.02rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .compact-grid,
-    .materials-grid,
-    .faq-grid-bottom,
-    .service-grid {
-      display: grid;
-      gap: 20px;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      margin-top: 20px;
-    }
-
-    .materials-grid,
-    .faq-grid-bottom {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .note-card p,
-    .note-card li,
-    .card p,
-    .service-card p {
-      color: var(--text-soft);
-      font-size: 0.98rem;
-    }
-
-    .about-block,
-    .mini-sections,
-    .faq {
+    .process-grid {
       display: grid;
       gap: 18px;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      counter-reset: process;
     }
 
-    .mini-sections article { padding-top: 4px; }
-
-    .mini-sections h3,
-    .service-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .service-extra {
-      display: grid;
-      gap: 10px;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      margin-top: 14px;
-    }
-
-    .mini-card {
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      background: #ffffff;
-      padding: 14px;
+    .process-step {
+      position: relative;
+      overflow: hidden;
       min-height: 100%;
     }
 
-    .mini-card strong {
+    .process-step::before {
+      counter-increment: process;
+      content: counter(process, decimal-leading-zero);
       display: block;
-      font-size: 12px;
-      line-height: 1.2;
-      letter-spacing: .08em;
-      text-transform: uppercase;
+      margin-bottom: 14px;
+      font-size: .75rem;
+      font-weight: 800;
       color: var(--accent);
-      margin-bottom: 6px;
-    }
-
-    .mini-card span {
-      display: block;
-      color: var(--text-soft);
-      font-size: 13.5px;
-      line-height: 1.58;
+      letter-spacing: .12em;
     }
 
     .feature-panel {
-      border-radius: 28px;
-      background: linear-gradient(135deg, #15171b 0%, #111316 100%);
-      border-color: rgba(255,255,255,0.10);
-      color: #f7f1e8;
-      box-shadow: 0 24px 60px rgba(0,0,0,.18);
+      padding: clamp(24px, 4vw, 38px);
+      background: linear-gradient(135deg, #15161a 0%, #101115 100%);
+      color: var(--text-inverse);
+      border-color: rgba(255,255,255,.10);
+      box-shadow: 0 30px 80px rgba(0,0,0,.22);
     }
 
     .feature-grid,
-    .plain-solution-grid {
+    .plain-grid {
       display: grid;
-      gap: var(--space-4);
-      align-items: start;
-      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 32px;
+      align-items: center;
+      grid-template-columns: minmax(220px, 300px) minmax(0,1fr);
     }
 
     .feature-cover,
-    .plain-solution-cover {
+    .plain-cover {
       width: 100%;
       max-width: 320px;
-      aspect-ratio: 4 / 4.9;
+      aspect-ratio: 4 / 5;
       border-radius: 24px;
       overflow: hidden;
       background: #ddd;
-      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: var(--shadow);
     }
 
-    .plain-solution-cover {
-      border-color: var(--line);
+    .feature-cover {
+      border: 1px solid rgba(255,255,255,.12);
+    }
+
+    .plain-cover {
+      border: 1px solid rgba(30,26,23,.10);
     }
 
     .feature-cover img,
-    .plain-solution-cover img {
+    .plain-cover img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
     .feature-kicker,
-    .plain-solution-kicker {
-      color: var(--accent);
-      font-size: 0.72rem;
+    .plain-kicker {
+      display: inline-block;
+      margin-bottom: 12px;
+      font-size: .76rem;
       font-weight: 800;
-      letter-spacing: 0.12em;
+      letter-spacing: .14em;
       text-transform: uppercase;
+      color: var(--accent-2);
     }
 
     .feature-title,
-    .plain-solution-title {
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 750;
-      max-width: 14ch;
-      line-height: 1.06;
-      letter-spacing: -0.035em;
+    .plain-title {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.04;
+      max-width: 12ch;
+      font-weight: 850;
       margin: 0;
     }
 
     .feature-text,
-    .plain-solution-text {
-      margin: 0 0 16px;
+    .plain-text {
       font-size: 1rem;
-      line-height: 1.78;
+      line-height: 1.75;
+      margin: 14px 0 0;
       max-width: 62ch;
     }
 
-    .feature-text { color: rgba(247, 241, 232, 0.82); }
-    .plain-solution-text { color: var(--text-soft); }
+    .feature-text,
+    .feature-bullets { color: rgba(248,243,235,.82); }
 
-    .feature-bullets,
-    .plain-solution-bullets {
-      margin: 0;
-      padding-left: 18px;
-      display: grid;
-      gap: 8px;
-      font-size: 0.95rem;
-      line-height: 1.7;
+    .plain-panel {
+      padding: clamp(24px, 4vw, 38px);
+      background: linear-gradient(180deg, rgba(255,255,255,.84), rgba(255,255,255,.62));
     }
-
-    .feature-bullets { color: rgba(247, 241, 232, 0.82); }
-    .plain-solution-bullets { color: var(--text-soft); }
 
     .capture-band {
-      border-radius: 26px;
-      background: linear-gradient(180deg, #faf5ec, #f3ebdf);
+      padding: clamp(24px, 4vw, 34px);
       display: grid;
-      gap: 16px;
+      gap: 18px;
       align-items: center;
+      background: linear-gradient(180deg, #fbf6ef, #f0e6d8);
     }
 
-    .capture-band h2,
-    .capture-band h3 {
-      margin: 0;
-      font-size: clamp(1.8rem, 3vw, 2.4rem);
-      line-height: 1.08;
-      letter-spacing: -0.03em;
-      font-weight: 800;
-      color: var(--text);
+    .capture-band h2 {
+      font-size: clamp(1.9rem, 3vw, 2.5rem);
+      max-width: 14ch;
     }
 
-    .capture-band p {
-      margin: 8px 0 0;
-      color: var(--text-soft);
-      font-size: 0.98rem;
-      line-height: 1.7;
-      max-width: 62ch;
+    .faq-shell {
+      display: grid;
+      gap: 28px;
     }
 
     .faq-list {
@@ -744,7 +766,7 @@
 
     details.faq-item {
       padding: 18px 18px 16px;
-      background: var(--surface);
+      background: rgba(255,255,255,.86);
     }
 
     summary {
@@ -756,8 +778,8 @@
       gap: 12px;
       font-size: 1rem;
       line-height: 1.4;
-      font-weight: 700;
-      letter-spacing: -0.012em;
+      font-weight: 800;
+      letter-spacing: -.012em;
     }
 
     summary::-webkit-details-marker { display: none; }
@@ -765,8 +787,7 @@
     .faq-answer,
     details p {
       margin-top: 10px;
-      color: var(--text-soft);
-      font-size: 0.98rem;
+      font-size: .98rem;
       line-height: 1.75;
     }
 
@@ -780,51 +801,51 @@
     details[open] .chev { transform: rotate(180deg); }
 
     .closing {
-      border-bottom: 0;
-      padding-bottom: 48px;
+      padding-top: 60px;
+      padding-bottom: 40px;
     }
 
     .closing-box {
-      padding: 36px;
-      border-radius: 24px;
-      background: var(--deep);
-      color: #f7f1e8;
-    }
-
-    .closing-box h2 {
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 750;
-      max-width: 12ch;
-    }
-
-    .closing-box p {
-      max-width: 42ch;
-      margin: 14px 0 0;
-      color: rgba(247, 241, 232, 0.78);
-      font-size: 1.02rem;
+      padding: clamp(28px, 4vw, 44px);
+      border-radius: 32px;
+      background: linear-gradient(135deg, #16161a 0%, #101014 100%);
+      color: var(--text-inverse);
+      box-shadow: 0 28px 80px rgba(0,0,0,.22);
+      border: 1px solid rgba(255,255,255,.08);
     }
 
     .closing-box .eyebrow {
-      color: rgba(247, 241, 232, 0.72);
+      color: rgba(248,243,235,.68);
       margin-bottom: 12px;
     }
 
-    .closing-box .button-primary,
-    .closing-box .btn--primary {
+    .closing-box h2 {
+      max-width: 12ch;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+    }
+
+    .closing-copy {
+      max-width: 46ch;
+      margin: 14px 0 0;
+      font-size: 1.02rem;
+      color: rgba(248,243,235,.78);
+    }
+
+    .closing-box .btn--primary,
+    .closing-box .button-primary {
       margin-top: 26px;
       background: var(--accent);
       color: #fff;
     }
 
-    .closing-box .button-primary:hover,
-    .closing-box .btn--primary:hover {
+    .closing-box .btn--primary:hover,
+    .closing-box .button-primary:hover {
       background: var(--accent-hover);
     }
 
     .footer-box {
       padding: 18px 20px;
-      border-radius: 24px;
-      background: var(--surface);
+      background: rgba(255,255,255,.8);
     }
 
     .footgrid {
@@ -852,7 +873,6 @@
 
     .fineprint {
       margin: 0;
-      color: var(--text-soft);
       font-size: 12px;
     }
 
@@ -892,7 +912,6 @@
 
     .pub-signature {
       padding: 8px 0 28px;
-      border-bottom: 0;
     }
 
     .pub-signature-text {
@@ -906,7 +925,7 @@
     .pub-signature-text a {
       color: inherit;
       text-decoration: underline;
-      text-decoration-color: rgba(30, 26, 23, .18);
+      text-decoration-color: rgba(30,26,23,.18);
       text-underline-offset: 2px;
     }
 
@@ -934,7 +953,7 @@
       overflow: auto;
       overscroll-behavior: contain;
       border-radius: 28px;
-      background: var(--surface);
+      background: var(--surface-strong);
       border: 1px solid var(--line);
       box-shadow: 0 28px 90px rgba(0,0,0,.30);
       color: var(--text);
@@ -997,9 +1016,7 @@
     }
 
     .lead-input::placeholder { color: #958c80; }
-
     .lead-input:hover { border-color: rgba(24,21,18,.24); }
-
     .lead-input:focus {
       outline: none;
       border-color: rgba(135,96,58,.54);
@@ -1111,62 +1128,91 @@
       }
     }
 
-    @media (max-width: 980px) {
+    @media (max-width: 1080px) {
       .hero-grid,
+      .split,
       .feature-grid,
-      .plain-solution-grid,
-      .section-grid,
-      .materials-grid,
-      .faq-grid-bottom,
+      .plain-grid,
+      .process-grid,
+      .proof-grid,
       .service-grid,
-      .compact-grid,
-      .service-extra {
+      .materials-grid,
+      .audience-grid,
+      .faq-grid-bottom,
+      .benefit-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero-grid,
+      .split,
+      .feature-grid,
+      .plain-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 16px 0;
+      }
+
+      .nav { justify-content: flex-start; }
+
+      .stats-grid,
+      .proof-grid,
+      .service-grid,
+      .materials-grid,
+      .audience-grid,
+      .faq-grid-bottom,
+      .benefit-grid,
+      .process-grid {
         grid-template-columns: 1fr;
       }
 
-      .section-label {
-        position: static;
-      }
-
-      .header-inner {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .nav {
-        gap: 12px 16px;
+      .portrait-grid {
+        grid-template-columns: 1fr;
       }
     }
 
     @media (max-width: 760px) {
       main section {
-        padding: 72px 0;
+        padding: 76px 0;
       }
 
       .hero {
-        padding-top: 72px;
+        padding-top: 48px;
+        padding-bottom: 68px;
       }
 
       .wrap {
         width: min(calc(100% - 28px), var(--max));
       }
 
-      .phase,
-      .note-card,
-      .service-card,
+      .hero-shell,
+      .surface-soft,
       .feature-panel,
+      .plain-panel,
       .capture-band,
-      .card,
-      .faq-item,
       .closing-box,
+      .lead-dialog,
       .footer-box,
-      .hero-card,
-      .lead-dialog {
+      .hero-panel,
+      .stat,
+      .card,
+      .service-card,
+      .material-card,
+      .proof-card,
+      .audience-card,
+      .process-step {
         padding: 18px;
       }
 
       .hero-actions,
       .service-actions,
+      .cluster-actions,
       .lead-actions {
         flex-direction: column;
         align-items: stretch;
@@ -1179,7 +1225,6 @@
       }
 
       #lead-modal { padding: 10px; }
-
       .lead-header { padding: 18px 16px 14px; }
       .lead-body { padding: 16px; }
 
@@ -1190,13 +1235,6 @@
         height: 48px;
       }
     }
-
-    @media (max-width: 640px) {
-      .portrait-wrap,
-      .hero-stat-grid {
-        grid-template-columns: 1fr;
-      }
-    }
   </style>
 </head>
 <body>
@@ -1204,10 +1242,11 @@
 
   <header class="site-header">
     <div class="wrap header-inner">
-      <div class="brand">
+      <a class="brand" href="#inicio" aria-label="Rodrigo Fagundes, início">
         <strong>Rodrigo Fagundes</strong>
         <span>Produção editorial · revisão · diagramação · InDesign</span>
-      </div>
+      </a>
+
       <nav class="nav" aria-label="Navegação principal">
         <a href="#trabalho">O trabalho</a>
         <a href="#como-funciona">Como funciona</a>
@@ -1228,164 +1267,182 @@
 
   <main id="main">
     <section class="hero wrap" id="inicio">
-      <div class="hero-grid">
-        <div>
-          <p class="eyebrow">Produção editorial para livros</p>
-          <h1>Rodrigo Fagundes</h1>
-          <p class="lead">Produção editorial para livros, da preparação do texto ao arquivo final.</p>
-          <p class="intro">Revisão, diagramação e preparação de arquivos para impressão e publicação digital. O trabalho inclui a organização das etapas do seu livro para evitar atraso e retrabalho.</p>
-          <div class="hero-meta" aria-label="Destaques profissionais">
-            <span class="pill">Mais de 10 anos de experiência</span>
-            <span class="pill">Mais de 200 livros publicados</span>
-            <span class="pill">Trabalho com impresso e digital</span>
+      <div class="hero-shell">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Produção editorial para livros</p>
+            <h1>Rodrigo Fagundes</h1>
+            <p class="lead">Seu livro avança com método, revisão técnica e arquivo final pronto para publicar.</p>
+            <p class="intro">Produção editorial para livros impressos e digitais, com atuação em preparação de texto, revisão, diagramação, fechamento técnico, organização de etapas e automação editorial no InDesign.</p>
+
+            <div class="hero-meta" aria-label="Destaques profissionais">
+              <span class="pill">Mais de 10 anos de experiência</span>
+              <span class="pill">Mais de 200 livros publicados</span>
+              <span class="pill">Impresso e digital</span>
+            </div>
+
+            <div class="hero-actions">
+              <button
+                class="button button-primary btn btn--primary js-ticket"
+                type="button"
+                data-item="ORCAMENTO PRODUCAO EDITORIAL">
+                <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+                Pedir orçamento
+              </button>
+
+              <button
+                class="button button-secondary btn btn--secondary js-download"
+                type="button"
+                data-item="PORTFOLIO RODRIGO FAGUNDES"
+                data-file-id="ID_PORTFOLIO_RODRIGO">
+                Ver portfólio
+              </button>
+            </div>
           </div>
-          <div class="hero-actions">
-            <button
-              class="button button-primary btn btn--primary js-ticket"
-              type="button"
-              data-item="ORCAMENTO PRODUCAO EDITORIAL">
-              <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-              </svg>
-              Pedir orçamento
-            </button>
-            <button
-              class="button button-secondary btn btn--secondary js-download"
-              type="button"
-              data-item="PORTFOLIO RODRIGO FAGUNDES"
-              data-file-id="ID_PORTFOLIO_RODRIGO">
-              Ver portfólio
-            </button>
-          </div>
+
+          <aside class="hero-panel" aria-label="Apresentação visual de Rodrigo Fagundes">
+            <div class="portrait-grid">
+              <div class="portrait">
+                <img src="assets/rodrigo-fagundes.jpg" alt="Retrato de Rodrigo Fagundes" loading="lazy" />
+              </div>
+
+              <div class="portrait-copy">
+                <strong>Produção editorial com método, padronização e clareza de processo</strong>
+                <span>Atuação em preparação, revisão, diagramação, projeto gráfico, provas e fechamento de arquivos.</span>
+                <span>Integra texto, design, operação editorial e soluções digitais para qualificar o trabalho com livros.</span>
+              </div>
+            </div>
+
+            <div class="stats-grid">
+              <article class="stat">
+                <strong>Experiência editorial</strong>
+                <span>Mais de 10 anos de atuação e participação em cerca de 200 publicações.</span>
+              </article>
+
+              <article class="stat">
+                <strong>Escopo</strong>
+                <span>Do original à publicação final, com atuação em livros impressos e digitais.</span>
+              </article>
+
+              <article class="stat">
+                <strong>Processo</strong>
+                <span>Fluxo organizado, decisões claras e acompanhamento técnico das etapas.</span>
+              </article>
+
+              <article class="stat">
+                <strong>Foco de trabalho</strong>
+                <span>Consistência de execução, redução de retrabalho e viabilidade operacional.</span>
+              </article>
+            </div>
+          </aside>
         </div>
-
-        <aside class="hero-card" aria-label="Apresentação visual de Rodrigo Fagundes">
-          <div class="portrait-wrap">
-            <div class="portrait">
-              <img src="assets/rodrigo-fagundes.jpg" alt="Retrato de Rodrigo Fagundes" loading="lazy" />
-            </div>
-            <div class="portrait-meta">
-              <strong>Produção editorial com método, padronização e clareza de processo</strong>
-              <span>Atuação em preparação, revisão, diagramação, projeto gráfico, provas e fechamento de arquivos.</span>
-              <span>Integra texto, design, operação editorial e soluções digitais para qualificar o trabalho com livros.</span>
-            </div>
-          </div>
-
-          <div class="hero-stat-grid">
-            <div class="hero-stat">
-              <strong>Experiência editorial</strong>
-              <span>Mais de 10 anos de atuação e participação em cerca de 200 publicações.</span>
-            </div>
-            <div class="hero-stat">
-              <strong>Escopo</strong>
-              <span>Do original à publicação final, com atuação em livros impressos e digitais.</span>
-            </div>
-            <div class="hero-stat">
-              <strong>Processo</strong>
-              <span>Fluxo organizado, decisões claras e acompanhamento técnico das etapas.</span>
-            </div>
-            <div class="hero-stat">
-              <strong>Foco de trabalho</strong>
-              <span>Consistência de execução, redução de retrabalho e viabilidade operacional.</span>
-            </div>
-          </div>
-        </aside>
       </div>
     </section>
 
     <section id="trabalho">
-      <div class="wrap section-grid">
-        <div class="section-label">
-          <h2>O trabalho editorial</h2>
-          <p>O núcleo do site: o que está incluído, em que ordem e como o livro avança até a publicação.</p>
+      <div class="wrap cluster">
+        <div class="section-heading">
+          <p class="eyebrow">O trabalho editorial</p>
+          <h2>O livro avança com clareza, controle técnico e menos retrabalho</h2>
+          <p class="section-intro">A produção editorial acompanha o livro em etapas conectadas. O objetivo não é apenas executar tarefas isoladas, mas organizar o processo para que o texto, a diagramação e os arquivos finais avancem com consistência.</p>
         </div>
-        <div class="section-body">
-          <p>A produção editorial acompanha o seu livro do começo ao fim.</p>
-          <p>Inclui as etapas que levam o seu livro até a publicação.</p>
 
-          <div class="phase-grid">
-            <article class="phase">
-              <h3>Antes da produção</h3>
-              <ul class="clean">
-                <li>leitura do original</li>
-                <li>ajustes no texto</li>
-                <li>organização do conteúdo</li>
-              </ul>
-            </article>
+        <div class="benefit-grid">
+          <article class="card">
+            <h3>Clareza de processo</h3>
+            <p>Cada etapa é definida com antecedência, com critérios técnicos, ordem de execução e visão do que precisa ser resolvido no livro.</p>
+          </article>
 
-            <article class="phase">
-              <h3>Durante a produção</h3>
-              <ul class="clean">
-                <li>revisão do texto</li>
-                <li>projeto gráfico</li>
-                <li>diagramação</li>
-                <li>controle das alterações</li>
-              </ul>
-            </article>
-                        <article class="phase">
-              <h3>Finalização</h3>
-              <ul class="clean">
-                <li>revisão de provas</li>
-                <li>arquivo para impressão</li>
-                <li>PDF para distribuição digital</li>
-                <li>arquivo para Kindle</li>
-              </ul>
-            </article>
+          <article class="card">
+            <h3>Menos retrabalho</h3>
+            <p>Ajustes, revisões e decisões são conduzidos de forma organizada para reduzir idas e vindas, atrasos e perda de consistência.</p>
+          </article>
 
-            <article class="phase">
-              <h3>Depois</h3>
-              <ul class="clean">
-                <li>conferência final dos arquivos</li>
-                <li>alinhamento com a gráfica</li>
-              </ul>
-            </article>
-          </div>
+          <article class="card">
+            <h3>Integração entre texto e arquivo final</h3>
+            <p>O trabalho conecta preparação, revisão, diagramação, provas e fechamento técnico sem quebrar o fluxo entre as partes.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="como-funciona">
+      <div class="wrap cluster">
+        <div class="section-heading">
+          <p class="eyebrow">Como funciona</p>
+          <h2>Um processo editorial organizado do original ao arquivo final</h2>
+          <p class="section-intro">O trabalho pode começar em qualquer etapa. Em todos os casos, as decisões são conduzidas com transparência, critérios técnicos e acompanhamento do que entra em cada fase.</p>
+        </div>
+
+        <div class="process-grid">
+          <article class="process-step">
+            <h3>Leitura e diagnóstico</h3>
+            <p>Leitura do material, identificação da etapa do livro e definição do que precisa ser ajustado antes da produção seguir.</p>
+          </article>
+
+          <article class="process-step">
+            <h3>Preparação e revisão</h3>
+            <p>Ajustes no texto, organização do conteúdo, revisão e apresentação clara das alterações quando há mudanças editoriais.</p>
+          </article>
+
+          <article class="process-step">
+            <h3>Diagramação e provas</h3>
+            <p>Aplicação do projeto gráfico, composição do miolo, controle das alterações e revisão de provas para consolidar o livro.</p>
+          </article>
+
+          <article class="process-step">
+            <h3>Fechamento e publicação</h3>
+            <p>Preparação dos arquivos finais para impressão, distribuição digital, Kindle e alinhamento técnico com a gráfica quando necessário.</p>
+          </article>
         </div>
       </div>
     </section>
 
     <section id="estrutura">
-      <div class="wrap section-grid">
-        <div class="section-label">
-          <h2>Estrutura do trabalho</h2>
-          <p>Os blocos que reforçam seu diferencial: organização, automação e parte técnica.</p>
+      <div class="wrap split">
+        <div class="surface-soft">
+          <p class="eyebrow">Estrutura do trabalho</p>
+          <h2>Organização editorial, acompanhamento e automação</h2>
+          <p class="section-intro">Além da execução das etapas do livro, o trabalho também atua na estrutura do processo, no acompanhamento do fluxo e na redução de tarefas repetitivas.</p>
         </div>
-        <div class="section-body">
-          <div class="compact-grid">
-            <article class="note-card">
-              <h3>Organização das etapas do livro</h3>
-              <p>Organização das etapas do seu livro para evitar atraso e retrabalho.</p>
-              <ul class="stack-list">
-                <li>definição das etapas</li>
-                <li>organização do trabalho</li>
-                <li>acompanhamento do cronograma</li>
-                <li>identificação de gargalos</li>
-              </ul>
-            </article>
 
-            <article class="note-card">
-              <h3>Automação de tarefas editoriais</h3>
-              <p>Automação de tarefas na produção do seu livro.</p>
-              <ul class="stack-list">
-                <li>ajustes aplicados em vários pontos</li>
-                <li>padronização de documentos</li>
-                <li>redução de tarefas repetitivas</li>
-              </ul>
-            </article>
-          </div>
+        <div class="service-grid">
+          <article class="service-card">
+            <h3>Organização das etapas do livro</h3>
+            <p>Estruturação do trabalho para evitar atraso, retrabalho e perda de controle entre texto, design e fechamento.</p>
+            <ul class="stack-list">
+              <li>definição das etapas</li>
+              <li>organização do trabalho</li>
+              <li>acompanhamento do cronograma</li>
+              <li>identificação de gargalos</li>
+            </ul>
+          </article>
+
+          <article class="service-card">
+            <h3>Automação de tarefas editoriais</h3>
+            <p>Uso de soluções para acelerar rotinas técnicas no InDesign, ampliar padronização e reduzir trabalho manual repetitivo.</p>
+            <ul class="stack-list">
+              <li>ajustes aplicados em vários pontos</li>
+              <li>padronização de documentos</li>
+              <li>redução de tarefas repetitivas</li>
+            </ul>
+          </article>
         </div>
       </div>
     </section>
 
     <section id="ferramentas">
-      <div class="wrap section-grid">
-        <div class="section-label">
-          <h2>Arquivos e ferramentas</h2>
-          <p>O texto técnico aparece como suporte ao trabalho, não como exibição de software.</p>
+      <div class="wrap split">
+        <div class="surface-soft">
+          <p class="eyebrow">Arquivos e ferramentas</p>
+          <h2>O lado técnico sustenta o trabalho editorial</h2>
+          <p class="section-intro">A técnica aparece como suporte ao livro. Cada etapa é conduzida no ambiente mais adequado para garantir precisão, legibilidade e consistência final.</p>
         </div>
-        <div class="section-body">
-          <p>O trabalho envolve diferentes tipos de arquivo.</p>
-          <p>Cada parte do seu livro é feita na ferramenta certa.</p>
+
+        <div class="card">
+          <h3>Ambiente de produção</h3>
           <ul class="clean">
             <li>texto e revisão em Word</li>
             <li>tabelas organizadas em Excel</li>
@@ -1394,81 +1451,84 @@
             <li>conferência e ajustes em PDF</li>
             <li>preparação de livros digitais</li>
           </ul>
-          <p>Isso reduz erro e retrabalho.</p>
+          <p>Essa combinação reduz erro, melhora a passagem entre etapas e fortalece a qualidade do arquivo final.</p>
         </div>
       </div>
     </section>
 
     <section id="publico">
-      <div class="wrap section-grid">
-        <div class="section-label">
-          <h2>Para quem este trabalho é</h2>
+      <div class="wrap cluster">
+        <div class="section-heading">
+          <p class="eyebrow">Para quem</p>
+          <h2>Atendimento para autores, editoras e equipes editoriais</h2>
+          <p class="section-intro">O trabalho atende diferentes perfis e diferentes pontos do processo, desde o texto ainda em construção até a finalização técnica para publicar.</p>
         </div>
-        <div class="section-body">
-          <ul class="clean">
-            <li>autores que estão escrevendo um livro</li>
-            <li>autores com texto pronto</li>
-            <li>editoras com demanda de produção</li>
-            <li>equipes que precisam organizar o processo</li>
-            <li>profissionais que trabalham com livros</li>
-          </ul>
-        </div>
-      </div>
-    </section>
 
-    <section id="como-funciona">
-      <div class="wrap section-grid">
-        <div class="section-label">
-          <h2>Como funciona o trabalho</h2>
-          <p>Um bloco de confiança: decisão, transparência e clareza de processo.</p>
-        </div>
-        <div class="section-body">
-          <p>Cada livro pede um tipo de cuidado.</p>
-          <p>O trabalho pode começar em qualquer etapa do seu livro.</p>
+        <div class="audience-grid">
+          <article class="audience-card">
+            <h3>Autores</h3>
+            <p>Para quem está escrevendo, revisando ou finalizando um livro e precisa de apoio técnico e editorial.</p>
+          </article>
 
-          <h3 class="subhead">Decisões</h3>
-          <p>As decisões são orientadas por critérios técnicos. O autor ou a editora decidem o que entra no livro.</p>
-          <p>Cada ajuste é apresentado com clareza antes de entrar no seu livro.</p>
+          <article class="audience-card">
+            <h3>Editoras</h3>
+            <p>Para editoras com demanda de produção, fechamento técnico, diagramação, revisão e organização de fluxo.</p>
+          </article>
 
-          <h3 class="subhead">Ajustes no texto</h3>
-          <p>Quando há mudanças de conteúdo, o texto é entregue com todas as alterações marcadas com clareza.</p>
-          <p>Assim, é possível ver o que mudou, entender o motivo e decidir o que deve seguir no seu livro.</p>
-          <p>O processo é transparente do começo ao fim.</p>
+          <article class="audience-card">
+            <h3>Equipes e profissionais do livro</h3>
+            <p>Para quem precisa organizar melhor o processo, padronizar execução e melhorar previsibilidade operacional.</p>
+          </article>
         </div>
       </div>
     </section>
 
     <section id="resultado">
-      <div class="wrap section-grid">
-        <div class="section-label">
-          <h2>O que muda no trabalho</h2>
+      <div class="wrap cluster">
+        <div class="section-heading">
+          <p class="eyebrow">Resultado</p>
+          <h2>O que muda quando o processo editorial fica mais claro</h2>
+          <p class="section-intro">Além de executar as tarefas do livro, o trabalho ajuda o projeto a avançar com segurança técnica, melhor organização e decisões mais bem acompanhadas.</p>
         </div>
-        <div class="section-body">
-          <p>Além de executar as etapas, o trabalho ajuda o seu livro a avançar com segurança.</p>
-          <ul class="clean">
-            <li>clareza sobre o que está sendo feito</li>
-            <li>controle sobre as decisões</li>
-            <li>menos retrabalho</li>
-            <li>um processo mais organizado</li>
-          </ul>
+
+        <div class="proof-grid">
+          <article class="proof-card">
+            <strong>Clareza</strong>
+            <p>Você entende o que está sendo feito em cada etapa.</p>
+          </article>
+
+          <article class="proof-card">
+            <strong>Controle</strong>
+            <p>As decisões e alterações ficam mais fáceis de acompanhar.</p>
+          </article>
+
+          <article class="proof-card">
+            <strong>Consistência</strong>
+            <p>Texto, layout e fechamento final seguem uma linha mais estável.</p>
+          </article>
+
+          <article class="proof-card">
+            <strong>Eficiência</strong>
+            <p>O processo ganha organização e reduz retrabalho desnecessário.</p>
+          </article>
         </div>
       </div>
     </section>
 
     <section id="sobre">
-      <div class="wrap section-grid">
-        <div class="section-label">
-          <h2>Sobre</h2>
+      <div class="wrap split">
+        <div class="surface-soft">
+          <p class="eyebrow">Sobre</p>
+          <h2>Base editorial, leitura crítica e prática de produção</h2>
+          <p class="section-intro"><strong>Rodrigo Fagundes</strong> atua com produção editorial de livros, preparação de texto, revisão, diagramação e fechamento técnico para projetos impressos e digitais.</p>
         </div>
-        <div class="section-body about-block">
-          <p><strong>Rodrigo Fagundes</strong> atua com produção editorial de livros.</p>
-          <p>Trabalha com preparação de texto, revisão, diagramação e fechamento técnico.</p>
+
+        <div class="card">
           <p>Também atua na organização das etapas do trabalho e na automação de processos no InDesign.</p>
           <p>Atende autores, editoras e equipes envolvidas na produção de livros impressos e digitais.</p>
           <p>Tem formação em escrita, literatura e mercado editorial pela Universidade do Vale do Rio dos Sinos (Unisinos).</p>
           <p>Essa base reúne leitura crítica, entendimento do funcionamento do livro e prática de produção.</p>
           <p>Também realiza formação contínua em tipografia, composição e automação editorial, com foco em qualidade de texto, legibilidade e eficiência no processo de produção.</p>
-          <p>Esse aprofundamento contribui para decisões mais precisas no texto, na diagramação e na preparação dos arquivos.</p>
         </div>
       </div>
     </section>
@@ -1521,51 +1581,43 @@
 
     <section id="scripts">
       <div class="wrap">
-        <div class="section-grid">
-          <div class="section-label">
-            <h2>PUB Editorial Scripts</h2>
-            <p>Automação técnica complementar para padronização e aceleração do fluxo editorial.</p>
-          </div>
+        <div class="plain-panel">
+          <div class="plain-grid">
+            <div class="plain-cover">
+              <img src="assets/pub-editorial-scripts.jpg" alt="Apresentação visual do PUB Editorial Scripts" loading="lazy" />
+            </div>
 
-          <div class="section-body">
-            <div class="plain-solution-grid">
-              <div class="plain-solution-cover">
-                <img src="assets/pub-editorial-scripts.jpg" alt="Apresentação visual do PUB Editorial Scripts" loading="lazy" />
-              </div>
+            <div class="plain-copy">
+              <span class="plain-kicker">Solução técnica complementar</span>
+              <h2 class="plain-title">PUB Editorial Scripts</h2>
 
-              <div class="plain-solution-copy">
-                <span class="plain-solution-kicker">Solução técnica complementar</span>
-                <h2 class="plain-solution-title">PUB Editorial Scripts</h2>
+              <p class="plain-text">Pacote de scripts JSX para Adobe InDesign voltado à padronização e à aceleração do fluxo editorial de livros, com foco na automação de etapas críticas da diagramação e do fechamento técnico.</p>
+              <p class="plain-text">A solução atua sobre necessidades reais da produção de livros, qualificando a execução sem substituir o trabalho editorial.</p>
 
-                <p class="plain-solution-text">Pacote de scripts JSX para Adobe InDesign voltado à padronização e à aceleração do fluxo editorial de livros, com foco na automação de etapas críticas da diagramação e do fechamento técnico.</p>
+              <ul class="plain-bullets">
+                <li>ganho de tempo</li>
+                <li>redução de erro</li>
+                <li>padronização</li>
+              </ul>
 
-                <p class="plain-solution-text">A solução atua sobre necessidades reais da produção de livros, qualificando a execução sem substituir o trabalho editorial.</p>
+              <div class="service-actions">
+                <button
+                  class="btn btn--primary js-ticket"
+                  type="button"
+                  data-item="CONTATO PUB EDITORIAL SCRIPTS">
+                  <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                  </svg>
+                  Quero conhecer os scripts
+                </button>
 
-                <ul class="plain-solution-bullets">
-                  <li>ganho de tempo</li>
-                  <li>redução de erro</li>
-                  <li>padronização</li>
-                </ul>
-
-                <div class="service-actions">
-                  <button
-                    class="btn btn--primary js-ticket"
-                    type="button"
-                    data-item="CONTATO PUB EDITORIAL SCRIPTS">
-                    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                    </svg>
-                    Quero conhecer os scripts
-                  </button>
-
-                  <button
-                    class="btn btn--purchase js-download"
-                    type="button"
-                    data-item="APRESENTACAO PUB EDITORIAL SCRIPTS"
-                    data-file-id="ID_APRESENTACAO_SCRIPTS">
-                    Receber material
-                  </button>
-                </div>
+                <button
+                  class="btn btn--purchase js-download"
+                  type="button"
+                  data-item="APRESENTACAO PUB EDITORIAL SCRIPTS"
+                  data-file-id="ID_APRESENTACAO_SCRIPTS">
+                  Receber material
+                </button>
               </div>
             </div>
           </div>
@@ -1577,8 +1629,9 @@
       <div class="wrap">
         <div class="capture-band">
           <div>
+            <p class="eyebrow">Atualizações</p>
             <h2>Receba materiais, apresentações e novidades da PUB Editorial</h2>
-            <p>Acesse conteúdos sobre produção editorial, processos, soluções, materiais técnicos e atualizações por e-mail.</p>
+            <p class="section-intro">Acesse conteúdos sobre produção editorial, processos, soluções, materiais técnicos e atualizações por e-mail.</p>
           </div>
 
           <div>
@@ -1600,245 +1653,228 @@
     </section>
 
     <section id="materiais">
-      <div class="wrap section-grid">
-        <div class="section-label">
-          <h2>Materiais</h2>
-          <p>Portfólio, apresentações e canal de contato para serviços editoriais, Pages, Scripts e projetos relacionados à produção de livros.</p>
+      <div class="wrap cluster">
+        <div class="section-heading">
+          <p class="eyebrow">Materiais</p>
+          <h2>Portfólio, apresentações e contato para serviços editoriais</h2>
+          <p class="section-intro">Materiais voltados à produção editorial, soluções complementares, relacionamento e apresentação profissional do trabalho.</p>
         </div>
 
-        <div class="section-body">
-          <div class="materials-grid">
-            <article class="card">
-              <h3>Portfólio</h3>
-              <p>Portfólio com exemplos de projetos e da forma de trabalho.</p>
-              <div style="margin-top:16px;">
-                <button
-                  class="btn btn--secondary w-full js-download"
-                  type="button"
-                  data-item="PORTFOLIO RODRIGO FAGUNDES"
-                  data-file-id="ID_PORTFOLIO_RODRIGO">
-                  Receber portfólio
-                </button>
-              </div>
-            </article>
+        <div class="materials-grid">
+          <article class="material-card">
+            <h3>Portfólio</h3>
+            <p>Portfólio com exemplos de projetos, experiência editorial e forma de trabalho.</p>
+            <div style="margin-top:16px;">
+              <button
+                class="btn btn--secondary w-full js-download"
+                type="button"
+                data-item="PORTFOLIO RODRIGO FAGUNDES"
+                data-file-id="ID_PORTFOLIO_RODRIGO">
+                Receber portfólio
+              </button>
+            </div>
+          </article>
 
-            <article class="card">
-              <h3>Soluções</h3>
-              <p>Apresentações sobre a estrutura da PUB Editorial, o Pages e o Scripts.</p>
-              <div style="margin-top:16px;">
-                <button
-                  class="btn btn--secondary w-full js-download"
-                  type="button"
-                  data-item="APRESENTACAO SOLUCOES PUB EDITORIAL"
-                  data-file-id="ID_APRESENTACAO_SOLUCOES">
-                  Receber apresentações
-                </button>
-              </div>
-            </article>
+          <article class="material-card">
+            <h3>Soluções</h3>
+            <p>Apresentações sobre a estrutura da PUB Editorial, o Pages e o Scripts.</p>
+            <div style="margin-top:16px;">
+              <button
+                class="btn btn--secondary w-full js-download"
+                type="button"
+                data-item="APRESENTACAO SOLUCOES PUB EDITORIAL"
+                data-file-id="ID_APRESENTACAO_SOLUCOES">
+                Receber apresentações
+              </button>
+            </div>
+          </article>
 
-            <article class="card">
-              <h3>Contato</h3>
-              <p>Envie uma mensagem sobre produção editorial, assessoria, Pages, Scripts, treinamento ou outros temas relacionados ao trabalho editorial.</p>
-              <div style="margin-top:16px;">
-                <button
-                  class="btn btn--secondary w-full js-ticket"
-                  type="button"
-                  data-item="CONTATO RODRIGO FAGUNDES">
-                  Entrar em contato
-                </button>
-              </div>
-            </article>
-          </div>
+          <article class="material-card">
+            <h3>Contato</h3>
+            <p>Envie uma mensagem sobre produção editorial, assessoria, Pages, Scripts, treinamento ou outros temas relacionados ao trabalho editorial.</p>
+            <div style="margin-top:16px;">
+              <button
+                class="btn btn--secondary w-full js-ticket"
+                type="button"
+                data-item="CONTATO RODRIGO FAGUNDES">
+                Entrar em contato
+              </button>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
     <section id="outros-trabalhos">
-      <div class="wrap section-grid">
-        <div class="section-label">
-          <h2>Outros trabalhos</h2>
+      <div class="wrap cluster">
+        <div class="section-heading">
+          <p class="eyebrow">Outros trabalhos</p>
+          <h2>Soluções complementares ligadas ao livro e ao fluxo editorial</h2>
+          <p class="section-intro">Além da produção editorial, há frentes voltadas à apresentação profissional, automação técnica e formação prática para o trabalho com livros.</p>
         </div>
-        <div class="section-body">
-          <div class="materials-grid">
-            <article class="card">
-              <h3>Pages</h3>
-              <p>Páginas de apresentação para mostrar seu trabalho ou o seu livro com clareza.</p>
-              <ul class="clean">
-                <li>apresentação clara</li>
-                <li>torna o contato direto</li>
-                <li>organiza a comunicação</li>
-              </ul>
-            </article>
 
-            <article class="card">
-              <h3>Scripts</h3>
-              <p>Automação de tarefas no InDesign.</p>
-              <ul class="clean">
-                <li>ganho de tempo</li>
-                <li>redução de erro</li>
-                <li>padronização</li>
-              </ul>
-            </article>
+        <div class="service-grid">
+          <article class="service-card">
+            <h3>Pages</h3>
+            <p>Páginas de apresentação para mostrar seu trabalho ou o seu livro com clareza.</p>
+            <ul class="clean">
+              <li>apresentação clara</li>
+              <li>torna o contato direto</li>
+              <li>organiza a comunicação</li>
+            </ul>
+          </article>
 
-            <article class="card">
-              <h3>Treinamento e capacitação</h3>
-              <p>Formação prática para quem quer trabalhar com produção editorial ou melhorar o próprio processo.</p>
-              <ul class="clean">
-                <li>preparação de texto</li>
-                <li>revisão</li>
-                <li>diagramação</li>
-                <li>fluxo de trabalho</li>
-                <li>uso das ferramentas no dia a dia do trabalho</li>
-              </ul>
-              <p style="margin-top:16px;"><strong>Para:</strong></p>
-              <ul class="clean">
-                <li>iniciantes na área</li>
-                <li>profissionais que querem se organizar melhor</li>
-                <li>equipes editoriais</li>
-              </ul>
-            </article>
-          </div>
+          <article class="service-card">
+            <h3>Scripts</h3>
+            <p>Automação de tarefas no InDesign com foco em produtividade e padronização.</p>
+            <ul class="clean">
+              <li>ganho de tempo</li>
+              <li>redução de erro</li>
+              <li>padronização</li>
+            </ul>
+          </article>
+
+          <article class="service-card">
+            <h3>Treinamento e capacitação</h3>
+            <p>Formação prática para quem quer trabalhar com produção editorial ou melhorar o próprio processo.</p>
+            <ul class="clean">
+              <li>preparação de texto</li>
+              <li>revisão</li>
+              <li>diagramação</li>
+              <li>fluxo de trabalho</li>
+              <li>uso das ferramentas no dia a dia</li>
+            </ul>
+          </article>
         </div>
       </div>
     </section>
 
     <section id="faq">
-      <div class="wrap section-grid">
-        <div class="section-label">
-          <h2>FAQ</h2>
-          <p>Perguntas práticas para ampliar clareza, confiança e cobertura temática da página.</p>
+      <div class="wrap faq-shell">
+        <div class="section-heading">
+          <p class="eyebrow">FAQ</p>
+          <h2>Perguntas práticas sobre produção editorial, etapas e contato</h2>
+          <p class="section-intro">Perguntas frequentes para ampliar clareza, confiança e cobertura temática da página.</p>
         </div>
 
-        <div class="section-body">
-          <div class="faq-list">
-            <details class="faq-item">
-              <summary>
-                Em que etapa o trabalho pode começar
-                <svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"></path>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>
+              Em que etapa o trabalho pode começar
+              <svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"></path>
+              </svg>
+            </summary>
+            <div class="faq-answer">Em qualquer etapa, do texto em desenvolvimento ao arquivo final para publicação.</div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              É possível contratar apenas uma parte
+              <svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"></path>
+              </svg>
+            </summary>
+            <div class="faq-answer">Sim. O trabalho pode ser contratado por etapa, conforme a necessidade do livro ou da equipe.</div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              Há publicação digital
+              <svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"></path>
+              </svg>
+            </summary>
+            <div class="faq-answer">Sim. O trabalho inclui preparação para distribuição digital e também para Kindle.</div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              Você trabalha com textos ainda em desenvolvimento
+              <svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"></path>
+              </svg>
+            </summary>
+            <div class="faq-answer">Sim. O processo pode começar com o texto ainda em construção ou com o original já pronto para produção.</div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              Você acompanha o processo com a gráfica
+              <svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"></path>
+              </svg>
+            </summary>
+            <div class="faq-answer">Sim. O trabalho pode incluir conferência final dos arquivos e alinhamento técnico com a gráfica.</div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              Os scripts substituem o trabalho editorial
+              <svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"></path>
+              </svg>
+            </summary>
+            <div class="faq-answer">Não. Eles apoiam a execução técnica, reduzem retrabalho e ampliam padronização, sem substituir a atividade editorial.</div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              Como funciona o contato
+              <svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"></path>
+              </svg>
+            </summary>
+            <div class="faq-answer">O projeto é enviado para análise. Depois disso, os próximos passos são alinhados conforme o tipo de demanda.</div>
+          </details>
+        </div>
+
+        <div class="faq-grid-bottom">
+          <article class="material-card">
+            <h3>Portfólio editorial</h3>
+            <p>Portfólio com exemplos de projetos e da forma de trabalho.</p>
+            <div style="margin-top:16px;">
+              <button
+                class="btn btn--primary w-full js-download"
+                type="button"
+                data-item="PORTFOLIO RODRIGO FAGUNDES"
+                data-file-id="ID_PORTFOLIO_RODRIGO">
+                <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                  <path d="M12 3v10"></path>
+                  <path d="M8 9l4 4 4-4"></path>
+                  <path d="M4 17v3h16v-3"></path>
                 </svg>
-              </summary>
-              <div class="faq-answer">Em qualquer etapa, do texto ao arquivo final.</div>
-            </details>
+                Receber portfólio
+              </button>
+            </div>
+          </article>
 
-            <details class="faq-item">
-              <summary>
-                É possível contratar apenas uma parte
-                <svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"></path>
-                </svg>
-              </summary>
-              <div class="faq-answer">Sim. O trabalho pode ser feito por etapa.</div>
-            </details>
+          <article class="material-card">
+            <h3>Receba novidades</h3>
+            <p>Acompanhe materiais, atualizações, conteúdos e soluções da PUB Editorial por e-mail.</p>
+            <div style="margin-top:16px;">
+              <button
+                class="btn btn--secondary w-full js-download"
+                type="button"
+                data-item="NOVIDADES PUB EDITORIAL"
+                data-file-id="ID_NOVIDADES_PUB">
+                Acompanhar novidades
+              </button>
+            </div>
+          </article>
 
-            <details class="faq-item">
-              <summary>
-                Há publicação digital
-                <svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"></path>
-                </svg>
-              </summary>
-              <div class="faq-answer">O trabalho inclui publicação digital.</div>
-            </details>
-
-            <details class="faq-item">
-              <summary>
-                Você trabalha com textos ainda em desenvolvimento
-                <svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"></path>
-                </svg>
-              </summary>
-              <div class="faq-answer">Sim. O trabalho pode começar com o texto em desenvolvimento ou já finalizado.</div>
-            </details>
-
-            <details class="faq-item">
-              <summary>
-                Você acompanha o processo com a gráfica
-                <svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"></path>
-                </svg>
-              </summary>
-              <div class="faq-answer">Sim. O trabalho inclui alinhamento com a gráfica na etapa final.</div>
-            </details>
-
-            <details class="faq-item">
-              <summary>
-                Você prepara arquivos para Kindle
-                <svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"></path>
-                </svg>
-              </summary>
-              <div class="faq-answer">Sim. O trabalho inclui preparação para publicação digital, incluindo Kindle.</div>
-            </details>
-
-            <details class="faq-item">
-              <summary>
-                Os scripts substituem o trabalho editorial
-                <svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"></path>
-                </svg>
-              </summary>
-              <div class="faq-answer">Não. Eles qualificam a execução técnica, reduzem retrabalho e aumentam a previsibilidade do processo, sem substituir a atividade editorial.</div>
-            </details>
-
-            <details class="faq-item">
-              <summary>
-                Como funciona o contato
-                <svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"></path>
-                </svg>
-              </summary>
-              <div class="faq-answer">O projeto é enviado para análise. Depois da análise, os próximos passos são alinhados.</div>
-            </details>
-          </div>
-
-          <div class="faq-grid-bottom">
-            <article class="card">
-              <h3>Portfólio editorial</h3>
-              <p>Portfólio com exemplos de projetos e da forma de trabalho.</p>
-              <div style="margin-top:16px;">
-                <button
-                  class="btn btn--primary w-full js-download"
-                  type="button"
-                  data-item="PORTFOLIO RODRIGO FAGUNDES"
-                  data-file-id="ID_PORTFOLIO_RODRIGO">
-                  <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-                    <path d="M12 3v10"></path>
-                    <path d="M8 9l4 4 4-4"></path>
-                    <path d="M4 17v3h16v-3"></path>
-                  </svg>
-                  Receber portfólio
-                </button>
-              </div>
-            </article>
-
-            <article class="card">
-              <h3>Receba novidades</h3>
-              <p>Acompanhe materiais, atualizações, conteúdos e soluções da PUB Editorial por e-mail.</p>
-              <div style="margin-top:16px;">
-                <button
-                  class="btn btn--secondary w-full js-download"
-                  type="button"
-                  data-item="NOVIDADES PUB EDITORIAL"
-                  data-file-id="ID_NOVIDADES_PUB">
-                  Acompanhar novidades
-                </button>
-              </div>
-            </article>
-
-            <article class="card">
-              <h3>Entre em contato</h3>
-              <p>Envie uma mensagem sobre produção editorial, assessoria, Pages, Scripts, treinamento ou outros temas relacionados ao trabalho editorial.</p>
-              <div style="margin-top:16px;">
-                <button
-                  class="btn btn--secondary w-full js-ticket"
-                  type="button"
-                  data-item="CONTATO RODRIGO FAGUNDES">
-                  Entrar em contato
-                </button>
-              </div>
-            </article>
-          </div>
+          <article class="material-card">
+            <h3>Entre em contato</h3>
+            <p>Envie uma mensagem sobre produção editorial, assessoria, Pages, Scripts, treinamento ou outros temas relacionados ao trabalho editorial.</p>
+            <div style="margin-top:16px;">
+              <button
+                class="btn btn--secondary w-full js-ticket"
+                type="button"
+                data-item="CONTATO RODRIGO FAGUNDES">
+                Entrar em contato
+              </button>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -1848,7 +1884,8 @@
         <div class="closing-box">
           <p class="eyebrow">Seu livro está em andamento</p>
           <h2>Conversa para avaliar a etapa do seu livro e os próximos passos.</h2>
-          <p>Contato para avaliar a etapa do seu livro e os próximos passos.</p>
+          <p class="closing-copy">Contato para entender o momento do projeto, definir prioridades e alinhar a melhor forma de conduzir a produção editorial.</p>
+
           <button
             class="button button-primary btn btn--primary js-ticket"
             type="button"
@@ -2053,7 +2090,7 @@
           hint: "Preencha seu nome e e-mail para receber os materiais sobre PUB Editorial, PUB Editorial Pages e PUB Editorial Scripts."
         }
       },
-      "NOVIDADES PUB EDITORIAL": {
+            "NOVIDADES PUB EDITORIAL": {
         download: {
           title: "Receber novidades da PUB Editorial",
           submit: "Quero acompanhar",
@@ -2194,6 +2231,7 @@
       if (event.key !== "Tab" || modal.getAttribute("data-state") !== "open") return;
       const focusable = getFocusableElements();
       if (!focusable.length) return;
+
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
       const active = document.activeElement;
